@@ -1,4 +1,7 @@
--- Insert into DEPARTMENTS
+-- ===============================
+-- Insert into departments
+-- ===============================
+
 INSERT INTO departments (dept_id, dept_name)
 VALUES (10, 'HR');
 
@@ -8,7 +11,10 @@ VALUES (20, 'IT');
 INSERT INTO departments (dept_id, dept_name)
 VALUES (30, 'Finance');
 
--- Insert into EMPLOYEES
+-- ===============================
+-- Insert into employees
+-- ===============================
+
 INSERT INTO employees (emp_id, emp_name, salary, dept_id)
 VALUES (1, 'Alice', 50000, 10);
 
