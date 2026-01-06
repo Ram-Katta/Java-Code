@@ -1,35 +1,31 @@
--- schema.sql
--- Dummy database schema for a sample application
+-- Drop tables if they already exist (ignore errors if not present)
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TABLE departments';
+EXCEPTION
+  WHEN OTHERS THEN NULL;
+END;
+/
 
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TABLE employees';
+EXCEPTION
+  WHEN OTHERS THEN NULL;
+END;
+/
+
+-- Create DEPARTMENTS table
+CREATE TABLE departments (
+  dept_id     NUMBER PRIMARY KEY,
+  dept_name   VARCHAR2(50)
 );
 
-CREATE TABLE products (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    stock INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE orders (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    total DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-CREATE TABLE order_items (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    order_id INT NOT NULL,
-    product_id INT NOT NULL,
-    quantity INT NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+-- Create EMPLOYEES table
+CREATE TABLE employees (
+  emp_id      NUMBER PRIMARY KEY,
+  emp_name    VARCHAR2(50),
+  salary      NUMBER(10,2),
+  dept_id     NUMBER,
+  CONSTRAINT fk_emp_dept
+    FOREIGN KEY (dept_id)
+    REFERENCES departments(dept_id)
 );
